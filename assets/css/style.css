@@ -1,0 +1,13 @@
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.column{
+    display: flex;
+    flex-direction: column;
+}
+label{
+    cursor: pointer;
+}
