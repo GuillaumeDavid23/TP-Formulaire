@@ -2,7 +2,7 @@
     //Déclaration des variables
      $error = '';
      $stockError ='';
-
+     $testForm = true;
      //REGEX
      $telReg = "/^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$/";
      $nameReg = "/^[A-Za-z]+$/";
@@ -120,7 +120,11 @@
                 $stockError = $stockError.$error;
                 $testForm = true;
             }
-            
+            if($badge > 8 && $badge < 0){
+                $error = "<br>ERREUR une donnée est invalide : Nombre de badge";
+                $stockError = $stockError.$error;
+                $testForm = true;
+            }
 
 
         }
@@ -138,22 +142,19 @@
 </head>
 
 <body>
+    <h1>Inscription La Manu</h1>
     <?php if($testForm) { ?>
     <!-- Formulaire -->
     <form action="<?= htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST">
         <!-- Affichage des erreurs -->
         <?= $error ?>
 
-        <!-- Nom -->
+        <!-- Nom / Prénom -->
         <div>
             <label for="lastname">Nom : </label>
-            <input type="text" name="lastname" id="lastname" required pattern="^[A-Za-z]+$">
-        </div>
-
-        <!-- Prénom -->
-        <div> 
+            <input type="text" name="lastname" id="lastname" placeholder="Nom" required pattern="^[A-Za-z]+$">
             <label for="firstname">Prénom : </label>
-            <input type="text" name="firstname" id="firstname" required pattern="^[A-Za-z]+$">
+            <input type="text" name="firstname" id="firstname" placeholder="Prénom" required pattern="^[A-Za-z]+$">
         </div>
 
         <!-- Date de naissance -->
@@ -165,9 +166,9 @@
         <!-- Pays de naissance et nationalité  -->
         <div>
             <label for="country">Pays de naissance :</label>
-            <select name="country" required>
+            <select name="country" required >
                 <!-- Selection du pays -->
-                <option value=""></option>
+                <option>Choisissez votre pays de naissance</option>
                 <optgroup label="A">
                     <option value="afghanistan">Afghanistan</option>
                     <option value="afrique-du-sud">Afrique du Sud</option>
@@ -471,7 +472,7 @@
             <label for="nationality">Nationalité : </label>
             <select name="nationality" required>
                 <!-- Selection de la nationalité -->
-                <option value=""></option>
+                <option>Choisissez votre nationalité..</option>
                 <option value="AFG">Afghane (Afghanistan)</option>
                 <option value="ALB">Albanaise (Albanie)</option>
                 <option value="DZA">Algérienne (Algérie)</option>
@@ -678,74 +679,74 @@
             <input type="number" name="number" id="number" placeholder="N°" required min="1" max="999">
             <input type="text" name="street" id="street" placeholder="Rue" required>
             <input type="text" name="city" id="city" placeholder="Ville" required>
-            <input type="text" name="zip" id="zip" placeholder="Code postal" required pattern="^[\d]{5}$">
+            <input type="text" name="zip" id="zip" size="8" maxlenght="5" placeholder="Code postal" required pattern="^[\d]{5}$" >
         </div>
         
         <!-- Email -->
         <div>
             <label for="mail">E-mail : </label>
-            <input type="email" name="mail" id="mail" required pattern="^((\w[^\W]+)[\.\-]?){1,}\@(([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$">
+            <input type="email" name="mail" id="mail" placeholder="Email" required pattern="^((\w[^\W]+)[\.\-]?){1,}\@(([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$">
         </div>
 
         <!-- Numéro de téléphone -->
         <div>
             <label for="phone">Téléphone : </label>
-            <input type="tel" name="phone" id="phone" required pattern="^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$" maxlenght="10">
+            <input type="tel" name="phone" id="phone" placeholder="Téléphone" required pattern="^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$" onkeyup="this.value = this.value.trim();">
         </div>
 
         <!-- Diplome -->
         <div> 
             <label for="degree">Diplôme : </label>
             <select name="degree" id="degree" required>
-                <option value=""></option>
-                <option value="none">Aucun</option>
-                <option value="bac">BAC</option>
-                <option value="bac2">BAC +2</option>
-                <option value="bac3">BAC +3</option>
-                <option value="superior">Supérieur à BAC +3</option>
+                <option value="">Niveau de diplôme ?</option>
+                <option value="Aucun">Aucun</option>
+                <option value="BAC">BAC</option>
+                <option value="BAC+2">BAC +2</option>
+                <option value="BAC+3">BAC +3</option>
+                <option value="Supérieur à BAC+3">Supérieur à BAC +3</option>
             </select>
         </div>
 
         <!-- Numéro pole emploi -->
         <div>
             <label for="poleNumber">Numéro Pôle emploi : </label>
-            <input type="text" name="poleNumber" id="poleNumber" required pattern="^[0-9]{6}[A-Z]{1}$">
+            <input type="text" name="poleNumber" id="poleNumber" placeholder="Numéro candidat" required pattern="^[0-9]{6}[A-Z]{1}$" onkeyup="this.value = this.value.toUpperCase();">
         </div>
 
         <!-- Nombre de badge -->
         <div>
-            <label for="badge">Nombre de badge : </label>
+            <label for="badge">Nombre de badge(s) : </label>
             <input type="number" name="badge" id="badge" required min="0" max="8">
         </div>
 
         <!-- Liens Codecademy -->
         <div>
-            <label for="codecademy">Codcademy</label>
-            <input type="text" name="codecademy" id="codecademy" required pattern="https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&\/\/=]*)">
+            <label for="codecademy">Lien Codecademy</label>
+            <input type="text" name="codecademy" id="codecademy" placeholder="Lien codecademy" required pattern="https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&\/\/=]*)">
         </div>
 
         <!-- Question secrète -->
         <div class="column">
             <h4>Si vous étiez un super héros/une super héroïne, qui seriez-vous et pourquoi ?</h4>
             <label for="secretAnswer">Qui ? </label>
-            <input type="text" name="secretAnswer" id="secretQuestion" required>
+            <input type="text" name="secretAnswer" id="secretQuestion" placeholder="Quel super héro ?" required>
             <label for="secretDesc">Pourquoi ?</label>
-            <textarea name="secretDesc" id="secretDesc" cols="30" rows="10" required></textarea>
+            <textarea name="secretDesc" id="secretDesc" placeholder="Pourquoi ce choix ?" cols="30" rows="5" required></textarea>
         </div>
 
         <!-- Hacks story -->
         <div class="column"> 
             <label for="hackStory"><h4>Racontez-nous un de vos "hacks" (pas forcément technique ou informatique)</h4></label>
-            <textarea name="hackStory" id="hackStory" cols="30" rows="10" required></textarea>
+            <textarea name="hackStory" id="hackStory" cols="30" rows="5" placeholder="Votre hack préféré.." required></textarea>
         </div>
 
         <!-- Question final -->
         <div> 
-            <label for="finalQuestion">Avez vous déjà eu une expérience avec la programmation et/ou l'informatique avant de remplir ce formulaire ?</label>
+            <label for="finalQuestion">Avez vous déjà eu une expérience avec la programmation <br> et/ou l'informatique avant de remplir ce formulaire ?</label>
             <select name="finalQuestion" id="finalQuestion" required>
                 <option value=""></option>
-                <option value="yes" selected="selected">Oui</option>
-                <option value="no">Non</option>
+                <option value="oui">Oui</option>
+                <option value="non">Non</option>
             </select>
         </div>
         <!-- Envoi du formulaire -->
@@ -753,32 +754,28 @@
     </form>
     <?php 
     //Affichage des données
-    }else{
-        // echo $stockError.'<br>';
-        echo $firstname.'<br>'.
-        $lastname.'<br>'.
-        $birthday.'<br>'.
-        $country.'<br>'.
-        $nationality.'<br>'.
-        $birthday.'<br>'.
-        $number.'<br>'.
-        $street.'<br>'.
-        $city.'<br>'.
-        $zipCode.'<br>'.
-        $mail.'<br>'.
-        $phone.'<br>'.
-        $degree.'<br>'.
-        $poleNumber.'<br>'.
-        $badge.'<br>'.
-        $codecademy.'<br>'.
-        $secretAnswer.'<br>'.
-        $secretDesc.'<br>'.
-        $hackStory.'<br>'.
-        $finalQuestion.'<br>';
-        var_dump($_POST);
-    } 
-    ?>
-    
+    }else{ ?>
+        <div class="info">
+            <h1>Bonjour <?=$firstname.' '.$lastname?></h1>
+            <div class="list">
+                <strong>Votre date de naissance est :</strong>  <?=$birthday?> <br>
+                <strong>Votre pays de naissance est :</strong> <?=$country?> <br>
+                <strong>Votre nationalité est :</strong>  <?=$nationality?> <br>
+                <strong>Adresse :</strong> <?=$number.' '.$street.' à '.$city.', '.$zipCode?> <br>
+                <strong>Votre e-mail :</strong>  <?=$mail?> <br>
+                <strong>Votre numéro de téléphone :</strong>  <?=$mail?> <br>
+                <strong>Vos diplômes :</strong> <?=$degree?> <br>
+                <strong>Vos numéro pôle emploi :</strong> <?=$poleNumber?> <br>
+                <strong>Vous avez :</strong> <?=$badge?> Badge(s) <br>
+                <strong>Votre lien vers Codecademy :</strong> <a href="<?=$codecademy?>" target="_blank">Allons-y</a> <br>
+                <strong>Quelle super héro seriez vous ?</strong> <?=$secretAnswer?> car <?=$secretDesc?> <br>
+                <strong>Votre hack préféré ?</strong> <?=$hackStory?><br>
+                <strong>Expérience en programmation ?</strong> <?=$finalQuestion?><br>
+            </div>
+        </div>
+
+    <?php } ?>
+    <script src="assets/js/main.js"></script>
 </body>
 
 </html>

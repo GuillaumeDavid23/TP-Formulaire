@@ -1,13 +1,44 @@
+body{
+    background-color: wheat;
+}
+
+h1{
+    text-align: center;
+}
+
 form{
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
 }
+
+form h4{
+    margin: 0;
+    padding: 0;
+}
+
+form div{
+    margin: 5px;
+}
+
 
 .column{
     display: flex;
     flex-direction: column;
 }
+
 label{
     cursor: pointer;
+}
+
+.info{
+    text-align: center;
+}
+
+.list{
+    text-align: left;
+    font-size: 20px;
+}
+.poleNumber{
+    text-transform: uppercase;
 }
