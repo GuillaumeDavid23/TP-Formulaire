@@ -42,3 +42,11 @@ label{
 .poleNumber{
     text-transform: uppercase;
 }
+.error{
+    color: red;
+    font-weight: bold;
+}
+
+.inputError{
+    border: 2px solid red;
+}

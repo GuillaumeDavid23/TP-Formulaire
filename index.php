@@ -1,20 +1,22 @@
 <?php
     //Déclaration des variables
      $error = '';
-     $stockError ='';
+     $stockError = [];
      $testForm = true;
      //REGEX
      $telReg = "/^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$/";
+     $letterReg = "/[A-Za-z]/";
      $nameReg = "/^[A-Za-z]+$/";
      $zipReg = "/^[\d]{5}$/";
-     $mailReg = "/^((\w[^\W]+)[\.\-]?){1,}\@(([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/";
      $poleReg = "/^[0-9]{6}[A-Z]{1}$/";
-     $linkReg = "/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&\/\/=]*)/";
+
+     //$mailReg = "/^((\w[^\W]+)[\.\-]?){1,}\@(([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/";
+     //$linkReg = "/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&\/\/=]*)/";
 
      //Fonction de validation des données
     function valid_data($index, $data)
-    {   
-        
+    {
+
         if($index == 'phone'){ //enlever espace dans le numéro
             $data = preg_replace('/\s+/', '', $data);
             $_POST[$index] =  $data;
@@ -29,104 +31,255 @@
         return $data;
     }
 
+    $requiredInput = [
+                'firstname' => false,
+                'lastname' => false,
+                'birthday' => false,
+                'number' => false,
+                'street' => false,
+                'city'=> false,
+                'zip'=> false,
+                'mail'=> false,
+                'phone'=> false,
+                'degree'=> false,
+                'poleNumber'=> false,
+                'badge'=> false,
+                'codecademy'=> true,
+                'secretAnswer'=> false,
+                'secretDesc'=> false,
+                'hackStory'=> false,
+                'finalQuestion'=> false,
+                'nationality'=> false
+            ];
+
+
     //Les données sont-elles envoyées ?
     if($_SERVER['REQUEST_METHOD'] == "POST"){
         //Test des champs
-        if(empty($_POST['firstname']) || empty($_POST['lastname']) 
-        || empty($_POST['birthday']) || empty($_POST['country']) 
-        || empty($_POST['number']) || empty($_POST['street'])
-        || empty($_POST['city']) || empty($_POST['zip'])
-        || empty($_POST['mail']) || empty($_POST['phone'])
-        || empty($_POST['degree']) || empty($_POST['poleNumber'])
-        || empty($_POST['badge']) || empty($_POST['codecademy'])
-        || empty($_POST['secretAnswer']) || empty($_POST['secretDesc'])
-        || empty($_POST['hackStory']) || empty($_POST['finalQuestion'])
-        || empty($_POST['nationality']) 
+        if(empty($_POST['firstname']) && $requiredInput['firstname'] == true
+        || empty($_POST['lastname']) && $requiredInput['lastname'] == true
+        || empty($_POST['birthday']) && $requiredInput['birthday'] == true
+        || empty($_POST['country']) && $requiredInput['birthday'] == true
+        || empty($_POST['number']) && $requiredInput['number'] == true
+        || empty($_POST['street'])&& $requiredInput['street'] == true
+        || empty($_POST['city']) && $requiredInput['city'] == true
+        || empty($_POST['zip'])&& $requiredInput['zip'] == true
+        || empty($_POST['mail']) && $requiredInput['mail'] == true
+        || empty($_POST['phone'])&& $requiredInput['phone'] == true
+        || empty($_POST['degree']) && $requiredInput['degree'] == true
+        || empty($_POST['poleNumber'])&& $requiredInput['poleNumber'] == true
+        || empty($_POST['badge']) && $requiredInput['badge'] == true
+        || empty($_POST['codecademy'])&& $requiredInput['codecademy'] == true
+        || empty($_POST['secretAnswer']) && $requiredInput['secretAnswer'] == true
+        || empty($_POST['secretDesc'])&& $requiredInput['secretDesc'] == true
+        || empty($_POST['hackStory']) && $requiredInput['hackStory'] == true
+        || empty($_POST['finalQuestion'])&& $requiredInput['finalQuestion'] == true
+        || empty($_POST['nationality']) && $requiredInput['nationality'] == true
         ){
             //Affichage du formulaire si vide
             $testForm = true;
+            $error = 'Un ou plusieurs champs obligatoires sont vides';
         }
         else{
             //Affichage des données
-            $testForm = false;
+        $testForm = false;
 
-            //Correction et validation de toutes les données
-            foreach ($_POST as $key => $value) {
-                $_POST[$key] = valid_data($key,$value);
-            }
+        //Correction et validation de toutes les données
+        foreach ($_POST as $key => $value) {
+            $_POST[$key] = valid_data($key,$value);
+        }
 
-            //Assignation des données dans des variables
+        //Assignation des données dans des variables
+        if(empty($_POST['firstname'])){
+            $firstname = "";
+        }else{
             $firstname = $_POST['firstname'];
+        }
+
+        if(empty($_POST['lastname'])){
+            $lastname = "";
+        }else{
             $lastname = $_POST['lastname'];
+        }
+
+        if(empty($_POST['birthday'])){
+            $birthday = "";
+        }else{
             $birthday = $_POST['birthday'];
+        }
+
+        if(empty($_POST['country'])){
+            $country = "";
+        }else{
             $country = $_POST['country'];
+        }
+
+        if(empty($_POST['nationality'])){
+            $nationality = "";
+        }else{
             $nationality = $_POST['nationality'];
+        }
+
+        if(empty($_POST['number'])){
+            $number = "";
+        }else{
             $number = $_POST['number'];
+        }
+
+        if(empty($_POST['street'])){
+            $street = "";
+        }else{
             $street = $_POST['street'];
+        }
+
+        if(empty($_POST['city'])){
+            $city = "";
+        }else{
             $city = $_POST['city'];
-            $zipCode = $_POST['zip'];
+        }
+
+        if(empty($_POST['zip'])){
+            $zip = "";
+        }else{
+            $zip = $_POST['zip'];
+        }
+
+        if(empty($_POST['mail'])){
+            $mail = "";
+        }else{
             $mail = $_POST['mail'];
+        }
+
+        if(empty($_POST['phone'])){
+            $phone = "";
+        }else{
             $phone = $_POST['phone'];
+        }
+
+        if(empty($_POST['degree'])){
+            $degree = "";
+        }else{
             $degree = $_POST['degree'];
+        }
+
+        if(empty($_POST['poleNumber'])){
+            $poleNumber = "";
+        }else{
             $poleNumber = $_POST['poleNumber'];
+        }
+
+        if(empty($_POST['badge'])){
+            $badge = "";
+        }else{
             $badge = $_POST['badge'];
+        }
+
+        if(empty($_POST['codecademy'])){
+            $codecademy = "";
+        }else{
             $codecademy = $_POST['codecademy'];
+        }
+
+        if(empty($_POST['secretAnswer'])){
+            $secretAnswer = "";
+        }else{
             $secretAnswer = $_POST['secretAnswer'];
+        }
+
+        if(empty($_POST['secretDesc'])){
+            $secretDesc = "";
+        }else{
             $secretDesc = $_POST['secretDesc'];
+        }
+
+        if(empty($_POST['hackStory'])){
+            $hackStory = "";
+        }else{
             $hackStory = $_POST['hackStory'];
+        }
+
+        if(empty($_POST['finalQuestion'])){
+            $finalQuestion = "";
+        }else{
             $finalQuestion = $_POST['finalQuestion'];
+        }
 
-            //Test regex avant de rentrer dans la BDD
-            if(!preg_match($poleReg, $poleNumber)){
-                
-                $error = "<br> ERREUR une donnée est invalide : Numéro Pole emploi";
-                $stockError = $stockError.$error;
-                $testForm = true;
-            }
+        //Test regex avant de rentrer dans la BDD
+        if(!preg_match($nameReg, $firstname) && !empty($firstname)){
+            $error = "<br>ERREUR une donnée est invalide : Prénom";
+            array_push($stockError, $error);
+            $testForm = true;
+        }
 
-            if(!preg_match($nameReg, $firstname)){
-                
-                $error = "<br>ERREUR une donnée est invalide : Prénom";
-                $stockError = $stockError.$error;
-                $testForm = true;
-            }
+        if(!preg_match($nameReg, $lastname)&& !empty($lastname)){
+            $error = "<br>ERREUR une donnée est invalide : Nom";
+            $stockError['lastname'] = $error;
+            $testForm = true;
+        }
 
-            if(!preg_match($nameReg, $lastname)){
-                $error = "<br>ERREUR une donnée est invalide : Nom";
-                $stockError = $stockError.$error;
-                $testForm = true;
-            }
+        if(!preg_match($zipReg, $zip)&& !empty($zip)){
+            $error = "<br>ERREUR une donnée est invalide : Code postal";
+            $stockError['zip'] = $error;
+            $testForm = true;
+        }
 
-            if(!preg_match($mailReg, $mail)){
+        if(!filter_input(INPUT_POST, 'mail', FILTER_VALIDATE_EMAIL) && !empty($mail)){
                 $error = "<br>ERREUR une donnée est invalide : Mail";
-                $stockError = $stockError.$error;
+                $stockError['mail'] = $error;
                 $testForm = true;
-            }
+        }
+        // if(!preg_match($mailReg, $mail)&& !empty($mail)){
+        //     $error = "<br>ERREUR une donnée est invalide : Mail";
+        //     $stockError['mail'] = $error;
+        //     $testForm = true;
+        // }
 
-            if(!preg_match($telReg, $phone)){
-                $error = "<br>ERREUR une donnée est invalide : Téléphone";
-                $stockError = $stockError.$error;
-                $testForm = true;
-            }
+        if(!preg_match($telReg, $phone)&& !empty($phone)){
+            $error = "<br>ERREUR une donnée est invalide : Téléphone";
+            $stockError['phone'] = $error;
+            $testForm = true;
+        }
 
-            if(!preg_match($zipReg, $zipCode)){
-                $error = "<br>ERREUR une donnée est invalide : Code postal";
-                $stockError = $stockError.$error;
-                $testForm = true;
-            }
+        if($degree != "Aucun" && $degree != "BAC" && $degree != "BAC+2" && $degree != "BAC+3" && $degree != "Supérieur à BAC+3" && !empty($degree)){
+            $error = "<br>ERREUR une donnée est invalide :  Diplôme";
+            $stockError['degree'] = $error;
+            $testForm = true;
+        }
 
-            if(!preg_match($linkReg, $codecademy)){
-                $error = "<br>ERREUR une donnée est invalide : Liens Codecademy";
-                $stockError = $stockError.$error;
-                $testForm = true;
-            }
-            if($badge > 8 && $badge < 0){
-                $error = "<br>ERREUR une donnée est invalide : Nombre de badge";
-                $stockError = $stockError.$error;
-                $testForm = true;
-            }
+        if(!preg_match($poleReg, $poleNumber)&& !empty($poleNumber)){
 
+            $error = "<br> ERREUR une donnée est invalide : Numéro Pole emploi";
+            $stockError['poleNumber'] = $error;
+            $testForm = true;
+        }
 
+        if($number > 999 || $number < 0 || preg_match($letterReg, $number) && !empty($number)){
+            $error = "<br>ERREUR une donnée est invalide :  Numéro de la rue";
+            $stockError['number'] = $error;
+            $testForm = true;
+        }
+
+        // if(!filter_var($codecademy, FILTER_VALIDATE_URL) && !empty($codecademy)){
+        //     $error = "<br>ERREUR une donnée est invalide : Lien Codecademy";
+        //     $stockError['codecademy'] = $error;
+        //     $testForm = true;
+        // }
+        if(!preg_match($linkReg, $codecademy) && !empty($codecademy)){
+            $error = "<br>ERREUR une donnée est invalide : Liens Codecademy";
+            $stockError['codecademy'] = $error;
+            $testForm = true;
+        }
+        if($badge > 8 || $badge < 0 || preg_match($letterReg, $badge) && !empty($badge)){
+            $error = "<br>ERREUR une donnée est invalide : Nombre de badge";
+            $stockError['badge'] = $error;
+            $testForm = true;
+        }
+        if(!preg_match($letterReg, $city) && !empty($city)){
+
+            $error = "<br> ERREUR une donnée est invalide : Ville";
+            $stockError['city'] = $error;
+            $testForm = true;
+        }
         }
     }
 ?>
@@ -147,26 +300,30 @@
     <!-- Formulaire -->
     <form action="<?= htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST">
         <!-- Affichage des erreurs -->
-        <?= $error ?>
+        <?php
+            foreach ($stockError as $key => $value) { //boucle affichage ERROR
+                echo "<div class='error'>$value</div>";
+            }
+        ?>
 
         <!-- Nom / Prénom -->
         <div>
             <label for="lastname">Nom : </label>
-            <input type="text" name="lastname" id="lastname" placeholder="Nom" required pattern="^[A-Za-z]+$">
+            <input type="text" name="lastname" id="lastname" <?= $classError = array_key_exists('lastname', $stockError) ? 'class="inputError"':'';?> placeholder="Nom" <?= $required = $requiredInput['lastname'] == true? 'required':'' ; ?> pattern="^[A-Za-z]+$">
             <label for="firstname">Prénom : </label>
-            <input type="text" name="firstname" id="firstname" placeholder="Prénom" required pattern="^[A-Za-z]+$">
+            <input type="text" name="firstname" id="firstname" <?= $classError = array_key_exists('firstname', $stockError)? 'class="inputError"':'';?> placeholder="Prénom"  <?= $required = $requiredInput['firstname'] == true? 'required':'' ; ?>pattern="^[A-Za-z]+$">
         </div>
 
         <!-- Date de naissance -->
-        <div> 
+        <div>
             <label for="birthday">Date de naissance :</label>
-            <input type="date" name="birthday" id="birthday" required>
+            <input type="date" name="birthday" id="birthday" <?= $classError = array_key_exists('birthday', $stockError)? 'class="inputError"':'';?>  <?= $required = $requiredInput['birthday'] == true? 'required':'' ; ?>>
         </div>
 
         <!-- Pays de naissance et nationalité  -->
         <div>
             <label for="country">Pays de naissance :</label>
-            <select name="country" required >
+            <select name="country" <?= $classError = array_key_exists('country', $stockError)? 'class="inputError"':'';?>  <?= $required = $requiredInput['country'] == true? 'required':'' ; ?>  >
                 <!-- Selection du pays -->
                 <option>Choisissez votre pays de naissance</option>
                 <optgroup label="A">
@@ -468,9 +625,9 @@
                     <option value="zimbabwe">Zimbabwe</option>
                 </optgroup>
             </select></div>
-        <div> 
+        <div>
             <label for="nationality">Nationalité : </label>
-            <select name="nationality" required>
+            <select name="nationality" <?= $classError = array_key_exists('nationality', $stockError)? 'class="inputError"':'';?>  <?= $required = $requiredInput['nationality'] == true? 'required':'' ; ?>>
                 <!-- Selection de la nationalité -->
                 <option>Choisissez votre nationalité..</option>
                 <option value="AFG">Afghane (Afghanistan)</option>
@@ -672,32 +829,32 @@
                 <option value="ZWE">Zimbabwéenne (Zimbabwe)</option>
             </select>
         </div>
-        
+
         <!-- Date de naissance -->
         <div>
             <label for="number">Adresse : </label>
-            <input type="number" name="number" id="number" placeholder="N°" required min="1" max="999">
-            <input type="text" name="street" id="street" placeholder="Rue" required>
-            <input type="text" name="city" id="city" placeholder="Ville" required>
-            <input type="text" name="zip" id="zip" size="8" maxlenght="5" placeholder="Code postal" required pattern="^[\d]{5}$" >
+            <input type="number" name="number" id="number" <?= $classError = array_key_exists('number', $stockError)? 'class="inputError"':'';?> placeholder="N°"  <?= $required = $requiredInput['number'] == true? 'required':'' ; ?> min="1" max="999">
+            <input type="text" name="street" id="street" <?= $classError = array_key_exists('street', $stockError)? 'class="inputError"':'';?> placeholder="Rue"  <?= $required = $requiredInput['street'] == true? 'required':'' ; ?>>
+            <input type="text" name="city" id="city" <?= $classError = array_key_exists('city', $stockError)? 'class="inputError"':'';?> placeholder="Ville"  <?= $required = $requiredInput['city'] == true? 'required':'' ; ?> pattern="^[A-Za-z]+$">
+            <input type="text" name="zip" id="zip" <?= $classError = array_key_exists('zip', $stockError)? 'class="inputError"':'';?> size="8" maxlenght="5" placeholder="Code postal"  <?= $required = $requiredInput['zip'] == true? 'required':'' ; ?> pattern="^[\d]{5}$" >
         </div>
-        
+
         <!-- Email -->
         <div>
             <label for="mail">E-mail : </label>
-            <input type="email" name="mail" id="mail" placeholder="Email" required pattern="^((\w[^\W]+)[\.\-]?){1,}\@(([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$">
+            <input type="email" name="mail" id="mail" <?= $classError = array_key_exists('mail', $stockError)? 'class="inputError"':'';?> placeholder="Email"  <?= $required = $requiredInput['mail'] == true? 'required':'' ; ?> pattern="^((\w[^\W]+)[\.\-]?){1,}\@(([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$">
         </div>
 
         <!-- Numéro de téléphone -->
         <div>
             <label for="phone">Téléphone : </label>
-            <input type="tel" name="phone" id="phone" placeholder="Téléphone" required pattern="^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$" onkeyup="this.value = this.value.trim();">
+            <input type="tel" name="phone" id="phone" <?= $classError = array_key_exists('phone', $stockError)? 'class="inputError"':'';?> placeholder="Téléphone"  <?= $required = $requiredInput['phone'] == true? 'required':'' ; ?> pattern="^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$" onkeyup="this.value = this.value.trim();">
         </div>
 
         <!-- Diplome -->
-        <div> 
+        <div>
             <label for="degree">Diplôme : </label>
-            <select name="degree" id="degree" required>
+            <select name="degree" id="degree" <?= $classError = array_key_exists('degree', $stockError)? 'class="inputError"':'';?>  <?= $required = $requiredInput['degree'] == true? 'required':'' ; ?>>
                 <option value="">Niveau de diplôme ?</option>
                 <option value="Aucun">Aucun</option>
                 <option value="BAC">BAC</option>
@@ -710,40 +867,40 @@
         <!-- Numéro pole emploi -->
         <div>
             <label for="poleNumber">Numéro Pôle emploi : </label>
-            <input type="text" name="poleNumber" id="poleNumber" placeholder="Numéro candidat" required pattern="^[0-9]{6}[A-Z]{1}$" onkeyup="this.value = this.value.toUpperCase();">
+            <input type="text" name="poleNumber" id="poleNumber" <?= $classError = array_key_exists('poleNumber', $stockError)? 'class="inputError"':'';?> placeholder="Numéro candidat"  <?= $required = $requiredInput['poleNumber'] == true? 'required':'' ; ?> pattern="^[0-9]{6}[A-Z]{1}$" onkeyup="this.value = this.value.toUpperCase();">
         </div>
 
         <!-- Nombre de badge -->
         <div>
             <label for="badge">Nombre de badge(s) : </label>
-            <input type="number" name="badge" id="badge" required min="0" max="8">
+            <input type="number" name="badge" id="badge" <?= $classError = array_key_exists('badge', $stockError)? 'class="inputError"':'';?>  <?= $required = $requiredInput['badge'] == true? 'required':'' ; ?> min="0" max="8">
         </div>
 
         <!-- Liens Codecademy -->
         <div>
             <label for="codecademy">Lien Codecademy</label>
-            <input type="text" name="codecademy" id="codecademy" placeholder="Lien codecademy" required pattern="https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&\/\/=]*)">
+            <input type="text" name="codecademy" id="codecademy" <?= $classError = array_key_exists('codecademy', $stockError)? 'class="inputError"':'';?> placeholder="Lien codecademy"  <?= $required = $requiredInput['codecademy'] == true? 'required':'' ; ?> pattern="https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&\/\/=]*)">
         </div>
 
         <!-- Question secrète -->
         <div class="column">
             <h4>Si vous étiez un super héros/une super héroïne, qui seriez-vous et pourquoi ?</h4>
             <label for="secretAnswer">Qui ? </label>
-            <input type="text" name="secretAnswer" id="secretQuestion" placeholder="Quel super héro ?" required>
+            <input type="text" name="secretAnswer" id="secretQuestion" placeholder="Quel super héro ?"  <?= $required = $requiredInput['secretAnswer'] == true? 'required':'' ; ?>>
             <label for="secretDesc">Pourquoi ?</label>
-            <textarea name="secretDesc" id="secretDesc" placeholder="Pourquoi ce choix ?" cols="30" rows="5" required></textarea>
+            <textarea name="secretDesc" id="secretDesc" placeholder="Pourquoi ce choix ?" cols="30" rows="5"  <?= $required = $requiredInput['secretDesc'] == true? 'required':'' ; ?>></textarea>
         </div>
 
         <!-- Hacks story -->
-        <div class="column"> 
+        <div class="column">
             <label for="hackStory"><h4>Racontez-nous un de vos "hacks" (pas forcément technique ou informatique)</h4></label>
-            <textarea name="hackStory" id="hackStory" cols="30" rows="5" placeholder="Votre hack préféré.." required></textarea>
+            <textarea name="hackStory" id="hackStory" cols="30" rows="5" placeholder="Votre hack préféré.."  <?= $required = $requiredInput['hackStory'] == true? 'required':'' ; ?>></textarea>
         </div>
 
         <!-- Question final -->
-        <div> 
+        <div>
             <label for="finalQuestion">Avez vous déjà eu une expérience avec la programmation <br> et/ou l'informatique avant de remplir ce formulaire ?</label>
-            <select name="finalQuestion" id="finalQuestion" required>
+            <select name="finalQuestion" id="finalQuestion"  <?= $required = $requiredInput['finalQuestion'] == true? 'required':'' ; ?>>
                 <option value=""></option>
                 <option value="oui">Oui</option>
                 <option value="non">Non</option>
@@ -752,7 +909,8 @@
         <!-- Envoi du formulaire -->
         <button type="submit">Envoyer !</button>
     </form>
-    <?php 
+
+    <?php
     //Affichage des données
     }else{ ?>
         <div class="info">
@@ -761,9 +919,9 @@
                 <strong>Votre date de naissance est :</strong>  <?=$birthday?> <br>
                 <strong>Votre pays de naissance est :</strong> <?=$country?> <br>
                 <strong>Votre nationalité est :</strong>  <?=$nationality?> <br>
-                <strong>Adresse :</strong> <?=$number.' '.$street.' à '.$city.', '.$zipCode?> <br>
+                <strong>Adresse :</strong> <?=$number.' '.$street.' à '.$city.', '.$zip?> <br>
                 <strong>Votre e-mail :</strong>  <?=$mail?> <br>
-                <strong>Votre numéro de téléphone :</strong>  <?=$mail?> <br>
+                <strong>Votre numéro de téléphone :</strong>  <?=$phone?> <br>
                 <strong>Vos diplômes :</strong> <?=$degree?> <br>
                 <strong>Vos numéro pôle emploi :</strong> <?=$poleNumber?> <br>
                 <strong>Vous avez :</strong> <?=$badge?> Badge(s) <br>
