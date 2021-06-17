@@ -1,14 +1,14 @@
 <?php
     //Déclaration des variables
-     $error = '';
-     $stockError = [];
-     $testForm = true;
+    $error = '';
+    $stockError = [];
+    $testForm = true;
      //REGEX
-     $telReg = "/^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$/";
-     $letterReg = "/[A-Za-z]/";
-     $nameReg = "/^[A-Za-z]+$/";
-     $zipReg = "/^[\d]{5}$/";
-     $poleReg = "/^[0-9]{6}[A-Z]{1}$/";
+    $telReg = "/^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$/";
+    $letterReg = "/[A-Za-z]/";
+    $nameReg = "/^[A-Za-z]+$/";
+    $zipReg = "/^[\d]{5}$/";
+    $poleReg = "/^[0-9]{6}[A-Z]{1}$/";
 
      //$mailReg = "/^((\w[^\W]+)[\.\-]?){1,}\@(([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/";
      //$linkReg = "/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&\/\/=]*)/";
