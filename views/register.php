@@ -1,30 +1,3 @@
-<?php
-    //Déclaration des variables
-    session_start();
-
-    $requiredInput = [
-                'firstname' => false,
-                'lastname' => false,
-                'birthday' => false,
-                'country' => false,
-                'number' => false,
-                'street' => false,
-                'city'=> false,
-                'zip'=> false,
-                'mail'=> false,
-                'phone'=> false,
-                'degree'=> false,
-                'poleNumber'=> false,
-                'badge'=> false,
-                'codecademy'=> false,
-                'secretAnswer'=> false,
-                'secretDesc'=> false,
-                'hackStory'=> false,
-                'finalQuestion'=> false,
-                'nationality'=> false
-            ];
-
-?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -39,10 +12,10 @@
 <body>
     <h1>Inscription La Manu</h1>
     <!-- Formulaire -->
-    <form action="../controllers/registerCtrl.php" method="POST">
+    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST">
         <!-- Affichage des erreurs -->
         <?php
-            foreach ($_SESSION as $key => $value) { //boucle affichage ERROR
+            foreach ($stockError as $key => $value) { //boucle affichage ERROR
                 echo "<div class='error'>$value</div>";
             }
         ?>
@@ -50,21 +23,21 @@
         <!-- Nom / Prénom -->
         <div>
             <label for="lastname">Nom : </label>
-            <input type="text" name="lastname" id="lastname" <?= $classError = array_key_exists('lastname', $_SESSION) ? 'class="inputError"':'';?> placeholder="Nom" <?= $required = $requiredInput['lastname'] == true? 'required':'' ; ?> pattern="^[A-Za-z]+$">
+            <input type="text" name="lastname" id="lastname" <?= $classError = array_key_exists('lastname', $stockError) ? 'class="inputError"':'';?> placeholder="Nom" <?= $required = $requiredInput['lastname'] == true? 'required':'' ; ?> pattern="^[A-Za-z]+$">
             <label for="firstname">Prénom : </label>
-            <input type="text" name="firstname" id="firstname" <?= $classError = array_key_exists('firstname', $_SESSION)? 'class="inputError"':'';?> placeholder="Prénom"  <?= $required = $requiredInput['firstname'] == true? 'required':'' ; ?>pattern="^[A-Za-z]+$">
+            <input type="text" name="firstname" id="firstname" <?= $classError = array_key_exists('firstname', $stockError)? 'class="inputError"':'';?> placeholder="Prénom"  <?= $required = $requiredInput['firstname'] == true? 'required':'' ; ?>pattern="^[A-Za-z]+$">
         </div>
 
         <!-- Date de naissance -->
         <div>
             <label for="birthday">Date de naissance :</label>
-            <input type="date" name="birthday" id="birthday" <?= $classError = array_key_exists('birthday', $_SESSION)? 'class="inputError"':'';?>  <?= $required = $requiredInput['birthday'] == true? 'required':'' ; ?>>
+            <input type="date" name="birthday" id="birthday" <?= $classError = array_key_exists('birthday', $stockError)? 'class="inputError"':'';?>  <?= $required = $requiredInput['birthday'] == true? 'required':'' ; ?>>
         </div>
 
         <!-- Pays de naissance et nationalité  -->
         <div>
             <label for="country">Pays de naissance :</label>
-            <select name="country" <?= $classError = array_key_exists('country', $_SESSION)? 'class="inputError"':'';?>  <?= $required = $requiredInput['country'] == true? 'required':'' ; ?>  >
+            <select name="country" <?= $classError = array_key_exists('country', $stockError)? 'class="inputError"':'';?>  <?= $required = $requiredInput['country'] == true? 'required':'' ; ?>  >
                 <!-- Selection du pays -->
                 <option>Choisissez votre pays de naissance</option>
                 <optgroup label="A">
@@ -368,7 +341,7 @@
             </select></div>
         <div>
             <label for="nationality">Nationalité : </label>
-            <select name="nationality" <?= $classError = array_key_exists('nationality', $_SESSION)? 'class="inputError"':'';?>  <?= $required = $requiredInput['nationality'] == true? 'required':'' ; ?>>
+            <select name="nationality" <?= $classError = array_key_exists('nationality', $stockError)? 'class="inputError"':'';?>  <?= $required = $requiredInput['nationality'] == true? 'required':'' ; ?>>
                 <!-- Selection de la nationalité -->
                 <option>Choisissez votre nationalité..</option>
                 <option value="AFG">Afghane (Afghanistan)</option>
@@ -574,28 +547,28 @@
         <!-- Date de naissance -->
         <div>
             <label for="number">Adresse : </label>
-            <input type="number" name="number" id="number" <?= $classError = array_key_exists('number', $_SESSION)? 'class="inputError"':'';?> placeholder="N°"  <?= $required = $requiredInput['number'] == true? 'required':'' ; ?> min="1" max="999">
-            <input type="text" name="street" id="street" <?= $classError = array_key_exists('street', $_SESSION)? 'class="inputError"':'';?> placeholder="Rue"  <?= $required = $requiredInput['street'] == true? 'required':'' ; ?>>
-            <input type="text" name="city" id="city" <?= $classError = array_key_exists('city', $_SESSION)? 'class="inputError"':'';?> placeholder="Ville"  <?= $required = $requiredInput['city'] == true? 'required':'' ; ?> pattern="^[A-Za-z]+$">
-            <input type="text" name="zip" id="zip" <?= $classError = array_key_exists('zip', $_SESSION)? 'class="inputError"':'';?> size="8" maxlenght="5" placeholder="Code postal"  <?= $required = $requiredInput['zip'] == true? 'required':'' ; ?> pattern="^[\d]{5}$" >
+            <input type="number" name="number" id="number" <?= $classError = array_key_exists('number', $stockError)? 'class="inputError"':'';?> placeholder="N°"  <?= $required = $requiredInput['number'] == true? 'required':'' ; ?> min="1" max="999">
+            <input type="text" name="street" id="street" <?= $classError = array_key_exists('street', $stockError)? 'class="inputError"':'';?> placeholder="Rue"  <?= $required = $requiredInput['street'] == true? 'required':'' ; ?>>
+            <input type="text" name="city" id="city" <?= $classError = array_key_exists('city', $stockError)? 'class="inputError"':'';?> placeholder="Ville"  <?= $required = $requiredInput['city'] == true? 'required':'' ; ?> pattern="^[A-Za-z]+$">
+            <input type="text" name="zip" id="zip" <?= $classError = array_key_exists('zip', $stockError)? 'class="inputError"':'';?> size="8" maxlenght="5" placeholder="Code postal"  <?= $required = $requiredInput['zip'] == true? 'required':'' ; ?> pattern="^[\d]{5}$" >
         </div>
 
         <!-- Email -->
         <div>
             <label for="mail">E-mail : </label>
-            <input type="email" name="mail" id="mail" <?= $classError = array_key_exists('mail', $_SESSION)? 'class="inputError"':'';?> placeholder="Email"  <?= $required = $requiredInput['mail'] == true? 'required':'' ; ?> pattern="^((\w[^\W]+)[\.\-]?){1,}\@(([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$">
+            <input type="email" name="mail" id="mail" <?= $classError = array_key_exists('mail', $stockError)? 'class="inputError"':'';?> placeholder="Email"  <?= $required = $requiredInput['mail'] == true? 'required':'' ; ?> pattern="^((\w[^\W]+)[\.\-]?){1,}\@(([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$">
         </div>
 
         <!-- Numéro de téléphone -->
         <div>
             <label for="phone">Téléphone : </label>
-            <input type="tel" name="phone" id="phone" <?= $classError = array_key_exists('phone', $_SESSION)? 'class="inputError"':'';?> placeholder="Téléphone"  <?= $required = $requiredInput['phone'] == true? 'required':'' ; ?> pattern="^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$" onkeyup="this.value = this.value.trim();">
+            <input type="tel" name="phone" id="phone" <?= $classError = array_key_exists('phone', $stockError)? 'class="inputError"':'';?> placeholder="Téléphone"  <?= $required = $requiredInput['phone'] == true? 'required':'' ; ?> pattern="^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$" onkeyup="this.value = this.value.trim();">
         </div>
 
         <!-- Diplome -->
         <div>
             <label for="degree">Diplôme : </label>
-            <select name="degree" id="degree" <?= $classError = array_key_exists('degree', $_SESSION)? 'class="inputError"':'';?>  <?= $required = $requiredInput['degree'] == true? 'required':'' ; ?>>
+            <select name="degree" id="degree" <?= $classError = array_key_exists('degree', $stockError)? 'class="inputError"':'';?>  <?= $required = $requiredInput['degree'] == true? 'required':'' ; ?>>
                 <option value="">Niveau de diplôme ?</option>
                 <option value="Aucun">Aucun</option>
                 <option value="BAC">BAC</option>
@@ -608,19 +581,19 @@
         <!-- Numéro pole emploi -->
         <div>
             <label for="poleNumber">Numéro Pôle emploi : </label>
-            <input type="text" name="poleNumber" id="poleNumber" <?= $classError = array_key_exists('poleNumber', $_SESSION)? 'class="inputError"':'';?> placeholder="Numéro candidat"  <?= $required = $requiredInput['poleNumber'] == true? 'required':'' ; ?> pattern="^[0-9]{6}[A-Z]{1}$" onkeyup="this.value = this.value.toUpperCase();">
+            <input type="text" name="poleNumber" id="poleNumber" <?= $classError = array_key_exists('poleNumber', $stockError)? 'class="inputError"':'';?> placeholder="Numéro candidat"  <?= $required = $requiredInput['poleNumber'] == true? 'required':'' ; ?> pattern="^[0-9]{6}[A-Z]{1}$" onkeyup="this.value = this.value.toUpperCase();">
         </div>
 
         <!-- Nombre de badge -->
         <div>
             <label for="badge">Nombre de badge(s) : </label>
-            <input type="number" name="badge" id="badge" <?= $classError = array_key_exists('badge', $_SESSION)? 'class="inputError"':'';?>  <?= $required = $requiredInput['badge'] == true? 'required':'' ; ?> min="0" max="8">
+            <input type="number" name="badge" id="badge" <?= $classError = array_key_exists('badge', $stockError)? 'class="inputError"':'';?>  <?= $required = $requiredInput['badge'] == true? 'required':'' ; ?> min="0" max="8">
         </div>
 
         <!-- Liens Codecademy -->
         <div>
             <label for="codecademy">Lien Codecademy</label>
-            <input type="text" name="codecademy" id="codecademy" <?= $classError = array_key_exists('codecademy', $_SESSION)? 'class="inputError"':'';?> placeholder="Lien codecademy"  <?= $required = $requiredInput['codecademy'] == true? 'required':'' ; ?> pattern="https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&\/\/=]*)">
+            <input type="text" name="codecademy" id="codecademy" <?= $classError = array_key_exists('codecademy', $stockError)? 'class="inputError"':'';?> placeholder="Lien codecademy"  <?= $required = $requiredInput['codecademy'] == true? 'required':'' ; ?> pattern="https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&\/\/=]*)">
         </div>
 
         <!-- Question secrète -->

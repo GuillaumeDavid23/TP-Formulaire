@@ -1,4 +1,5 @@
 <?php
+session_start();
 //Déclaration des variables
     $error = '';
     $stockError = [];
@@ -26,7 +27,9 @@
         if($stmt === false){  
             die("Erreur");
         }
-    }catch (PDOException $e){
+    }
+    catch (PDOException $e)
+    {
         echo $e->getMessage();
     }
     
@@ -49,8 +52,8 @@
     }
 
     $requiredInput = [
-                'firstname' => false,
-                'lastname' => false,
+                'firstname' => true,
+                'lastname' => true,
                 'birthday' => false,
                 'country' => false,
                 'number' => false,
@@ -74,7 +77,8 @@
     //Les données sont-elles envoyées ?
     if($_SERVER['REQUEST_METHOD'] == "POST"){
         //Test des champs
-        if(empty($_POST['firstname'])      || empty($_POST['lastname']) && $requiredInput['lastname'] == true
+        if(empty($_POST['firstname'])      
+        || empty($_POST['lastname']) && $requiredInput['lastname'] == true
         || empty($_POST['birthday']) && $requiredInput['birthday'] == true
         || empty($_POST['country']) && $requiredInput['country'] == true
         || empty($_POST['number']) && $requiredInput['number'] == true
@@ -319,22 +323,17 @@
     if($testForm){
         session_destroy();
         session_start();
-        
-        foreach ($stockError as $errorName => $errorValue) {
-            $_SESSION[$errorName] = $errorValue;
-        }
         $_SESSION["registered"] = false;
-        header('Location: ../views/register.php');
-        exit();
+        include '../views/register.php';
     }else{
+        
         session_destroy();
         session_start();
+        echo $firstname;
         $_SESSION["registered"] = true;
-        $sql = "INSERT INTO user(firstname, lastname, birthday, number, street, city, zip, mail, phone, degree, poleNumber, badge, link, secretAnswer, secretDesc, hackStory, finalQuestion, nationality, country) 
-        VALUES('$firstname', '$lastname', '$birthday', '$number', '$street', '$city', '$zip', '$mail', '$phone', '$degree', '$poleNumber', '$badge', '$codecademy', '$secretAnswer', '$secretDesc', '$hackStory', '$finalQuestion', '$nationality', `$country`)";
-        $pdo->exec($sql);
-
-        header('Location: ../views/showtome.php');
-        exit();
+        $sql = "INSERT INTO `user`(`firstname`, `lastname`, `birthday`, `number`, `street`, `city`, `zip`, `mail`, `phone`, `degree`, `poleNumber`, `badge`, `link`, `secretAnswer`, `secretDesc`, `hackStory`, `finalQuestion`, `nationality`, `country`) 
+        VALUES('$firstname', '$lastname', '$birthday', '$number', '$street', '$city', '$zip', '$mail', '$phone', '$degree', '$poleNumber', '$badge', '$codecademy', '$secretAnswer', '$secretDesc', '$hackStory', '$finalQuestion', '$nationality', '$country')";
+        $pdo->query($sql);
+        include '../views/showtome.php';
     }
 ?>

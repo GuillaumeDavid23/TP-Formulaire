@@ -1,5 +1,4 @@
 <?php 
-    session_start();
     $registered = $_SESSION["registered"];
     if(!$registered){
         header('Location: ../index.php');
