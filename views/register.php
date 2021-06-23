@@ -25,7 +25,7 @@
             <label for="lastname">Nom : </label>
             <input type="text" name="lastname" id="lastname" <?= $classError = array_key_exists('lastname', $stockError) ? 'class="inputError"':'';?> placeholder="Nom" <?= $required = $requiredInput['lastname'] == true? 'required':'' ; ?> pattern="^[A-Za-z]+$">
             <label for="firstname">Prénom : </label>
-            <input type="text" name="firstname" id="firstname" <?= $classError = array_key_exists('firstname', $stockError)? 'class="inputError"':'';?> placeholder="Prénom"  <?= $required = $requiredInput['firstname'] == true? 'required':'' ; ?>pattern="^[A-Za-z]+$">
+            <input type="text" name="firstname" id="firstname" <?= $classError = array_key_exists('firstname', $stockError)? 'class="inputError"':'';?> placeholder="Prénom"  <?= $required = $requiredInput['firstname'] == true? 'required':'' ; ?> pattern="^[A-Za-z]+$">
         </div>
 
         <!-- Date de naissance -->

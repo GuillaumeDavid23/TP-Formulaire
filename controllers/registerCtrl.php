@@ -1,4 +1,9 @@
 <?php
+
+    $test = 45;
+
+
+
 session_start();
 //Déclaration des variables
     $error = '';
@@ -138,115 +143,115 @@ session_start();
 
         //Assignation des données dans des variables
         if(empty($_POST['firstname'])){
-            $firstname = null;
+            $firstname = '';
         }else{
             $firstname = $_POST['firstname'];
         }
 
         if(empty($_POST['lastname'])){
-            $lastname = null;
+            $lastname = '';
         }else{
             $lastname = $_POST['lastname'];
         }
 
         if(empty($_POST['birthday'])){
-            $birthday = null;
+            $birthday = '';
         }else{
             $birthday = $_POST['birthday'];
         }
 
         if(empty($_POST['country'])){
-            $country = "null";
+            $country = "''";
         }else{
             $country = $_POST['country'];
         }
 
         if(empty($_POST['nationality'])){
-            $nationality = null;
+            $nationality = '';
         }else{
             $nationality = $_POST['nationality'];
         }
 
         if(empty($_POST['number'])){
-            $number = null;
+            $number = '0';
         }else{
             $number = $_POST['number'];
         }
 
         if(empty($_POST['street'])){
-            $street = null;
+            $street = '';
         }else{
             $street = $_POST['street'];
         }
 
         if(empty($_POST['city'])){
-            $city = null;
+            $city = '';
         }else{
             $city = $_POST['city'];
         }
 
         if(empty($_POST['zip'])){
-            $zip = null;
+            $zip = '0';
         }else{
             $zip = $_POST['zip'];
         }
 
         if(empty($_POST['mail'])){
-            $mail = null;
+            $mail = '';
         }else{
             $mail = $_POST['mail'];
         }
 
         if(empty($_POST['phone'])){
-            $phone = null;
+            $phone = '';
         }else{
             $phone = $_POST['phone'];
         }
 
         if(empty($_POST['degree'])){
-            $degree = null;
+            $degree = '';
         }else{
             $degree = $_POST['degree'];
         }
 
         if(empty($_POST['poleNumber'])){
-            $poleNumber = null;
+            $poleNumber = '';
         }else{
             $poleNumber = $_POST['poleNumber'];
         }
 
         if(empty($_POST['badge'])){
-            $badge = null;
+            $badge = '0';
         }else{
             $badge = $_POST['badge'];
         }
 
         if(empty($_POST['codecademy'])){
-            $codecademy = null;
+            $codecademy = '';
         }else{
             $codecademy = $_POST['codecademy'];
         }
 
         if(empty($_POST['secretAnswer'])){
-            $secretAnswer = null;
+            $secretAnswer = '';
         }else{
             $secretAnswer = $_POST['secretAnswer'];
         }
 
         if(empty($_POST['secretDesc'])){
-            $secretDesc = null;
+            $secretDesc = '';
         }else{
             $secretDesc = $_POST['secretDesc'];
         }
 
         if(empty($_POST['hackStory'])){
-            $hackStory = null;
+            $hackStory = '';
         }else{
             $hackStory = $_POST['hackStory'];
         }
 
         if(empty($_POST['finalQuestion'])){
-            $finalQuestion = null;
+            $finalQuestion = '';
         }else{
             $finalQuestion = $_POST['finalQuestion'];
         }
